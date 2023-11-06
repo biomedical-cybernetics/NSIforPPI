@@ -22,5 +22,5 @@ Here, we introduce a new concept of intelligence termed Network Shape Intelligen
 
 ## Folders description
 Each folder contains the scripts to generate the specific item in the article, starting from the original data.
-Download the contents of each folder and put them in: NSIforPPI/[Figure X/Suppl Figure X/Suppl Table X]/data_replicated/scripts/.
+Download the contents of each folder and put them in: NSI_code_review_NMI/[Figure X/Suppl Figure X/Suppl Table X]/data_replicated/scripts/.
 
