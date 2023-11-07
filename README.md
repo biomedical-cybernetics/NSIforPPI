@@ -5,7 +5,7 @@ https://www.biorxiv.org/content/10.1101/2023.08.10.552825v2
 
 Ilyes Abdelhamid1,5,†, Alessandro Muscoloni1,4,5,†, Danny Marc Rotscher6, Matthias Lieber6, Ulf Markwardt6 and Carlo Vittorio Cannistraci1,2,3,4,5*.
 
-## Affiliations
+## Authors information
 1. Center for Complex Network Intelligence (CCNI), Tsinghua Laboratory of Brain and Intelligence (THBI), Tsinghua University, Beijing, China.
 2. Department of Computer Science, Tsinghua University, Beijing, China.
 3. Department of Physics, Tsinghua University, Beijing, China.
