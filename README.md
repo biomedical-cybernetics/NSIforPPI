@@ -3,7 +3,7 @@
 ## Reference 
 https://www.biorxiv.org/content/10.1101/2023.08.10.552825v2
 
-Ilyes Abdelhamid1,5,†, Alessandro Muscoloni1,4,5,†, Danny Marc Rotscher6, Matthias Lieber6, Ulf Markwardt6 and Carlo Vittorio Cannistraci1,2,3,4,5*.
+Ilyes Abdelhamid<sup>1,5,†</sup>, Alessandro Muscoloni<sup>1,4,5,†</sup>, Danny Marc Rotscher<sup>6</sup>, Matthias Lieber<sup>6</sup>, Ulf Markwardt<sup>6</sup>, and Carlo Vittorio Cannistraci<sup>1,2,3,4,5*</sup>.
 
 ## Authors information
 1. Center for Complex Network Intelligence (CCNI), Tsinghua Laboratory of Brain and Intelligence (THBI), Tsinghua University, Beijing, China.
