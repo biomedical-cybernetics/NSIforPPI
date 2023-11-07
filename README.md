@@ -31,5 +31,5 @@ Here, we introduce a new concept of intelligence termed Network Shape Intelligen
 + **run_*.m**.  
   The main code with two options:
   - Option 1: generate item with existing results.
-  - Option 2: to recreate item from original data.
+  - Option 2: recreate item from original data.
   
