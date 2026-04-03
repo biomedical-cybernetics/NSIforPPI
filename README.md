@@ -1,35 +1,87 @@
-# Network shape intelligence outperforms AlphaFold2 intelligence in vanilla protein interaction prediction
+# Demo: CH Link Prediction on Yeast DIP Network
 
-## Reference 
-https://www.biorxiv.org/content/10.1101/2023.08.10.552825v2
+Evaluates CH-based link prediction methods on the Yeast DIP network using 10% perturbation and AUCPR scoring. Both MATLAB and Python implementations are provided.
 
-Ilyes Abdelhamid<sup>1,5,†</sup>, Alessandro Muscoloni<sup>1,4,5,†</sup>, Danny Marc Rotscher<sup>6</sup>, Matthias Lieber<sup>6</sup>, Ulf Markwardt<sup>6</sup>, and Carlo Vittorio Cannistraci<sup>1,2,3,4,5*</sup>.
+## Folder Structure
 
-## Authors information
-1. Center for Complex Network Intelligence (CCNI), Tsinghua Laboratory of Brain and Intelligence (THBI), Tsinghua University, Beijing, China.
-2. Department of Computer Science, Tsinghua University, Beijing, China.
-3. Department of Physics, Tsinghua University, Beijing, China.
-4. Department of Biomedical Engineering, Tsinghua University, Beijing, China.
-5. Biomedical Cybernetics Group, Biotechnology Center (BIOTEC), Center for Molecular and Cellular Bioengineering (CMCB), Department of Physics, Technische Universität Dresden, Dresden, Germany. 
-6. Center for Information Services and High-Performance Computing (ZIH), Technische Universität Dresden, Dresden, Germany.  
-  
-† First co-authorship  
-*Corresponding author: Carlo Vittorio Cannistraci (kalokagathos.agon@gmail.com) 
+```
+NSIforPPI/
+├── legacy/  
+├── matlab/                  # MATLAB implementation
+│   ├── run_aucpr_from_precomputed.m
+│   ├── CHA_linkpred_monopartite_final.m
+│   ├── prediction_evaluation.m
+│   ├── replace_inf_distances.m
+│   └── CH_scores_mex_final.c
+├── python/                  # Python implementation
+│   ├── run_aucpr_from_precomputed.py
+│   ├── ch_linkpred.py
+│   ├── prediction_evaluation.py
+│   ├── CH_scores_new_v2.cpp
+│   ├── CH_scores_new_v2.h
+│   ├── bindings.cpp
+│   └── setup.py
+├── matrix/                  # Input data
+│   ├── Yeast_DIP_net.mat
+│   ├── network_perturbed_10percent_GSP_GSN_Yeast_noconn.mat
+│   └── list_pairs_10percent_GSP_GSN_Yeast_noconn.mat
+└── README.md
+README.md
+```
 
-## Abstract
-<p align="justify"> For decades, scientists and engineers have been working to predict protein interactions, and network topology methods have emerged as extensively studied techniques. Recently, approaches based on AlphaFold2 intelligence, exploiting 3D molecular structural information, have been proposed for protein interaction prediction, they are promising as potential alternatives to traditional laboratory experiments, and their design and performance evaluation is compelling. 
-Here, we introduce a new concept of intelligence termed Network Shape Intelligence (NSI). NSI is modelled via network automata rules which minimize external links in local communities according to a brain-inspired principle, as it draws upon the local topology and plasticity rationales initially devised in brain network science and then extended to any complex network. We show that by using only local network information and without the need for training, these network automata designed for modelling and predicting network connectivity can outperform AlphaFold2 intelligence in vanilla protein interactions prediction. We find that the set of interactions mispredicted by AlphaFold2 predominantly consists of proteins whose amino acids exhibit higher probability of being associated with intrinsically disordered regions. Finally, we suggest that the future advancements in AlphaFold intelligence could integrate principles of NSI to further enhance the modelling and structural prediction of protein interactions.</p>
+Output is written to `table/table_auc_pr_CH_Yeast_DIP_net.xlsx`.
 
-## Folders description
-```git clone``` the NSIforPPI repository. Every item folder (except **Suppl AFM**) is organized as follows:
-+ **data**  
-  It contains a word document with a link to download the data. Extract the content of the downloaded data in this folder. 
-+ **data_replicated**  
-  It contains the scripts to generate the item from the original data, involving all the required computations. Outcomes of these computations are stored in the different subfolders already created.
-+ **README_***  
-  A README file that explains how to generate/replicate the item.
-+ **run_*.m**.  
-  The main code with two options:
-  - Option 1: generate item with existing results.
-  - Option 2: recreate item from original data.
-  
+---
+
+## MATLAB
+
+### Requirements
+
+- MATLAB R2019b or later
+- A C compiler supported by MATLAB
+- Statistics and Machine Learning Toolbox (for `tiedrank`)
+
+### Setup: Compile MEX (once)
+
+Navigate to `matlab/` and run in MATLAB:
+
+```matlab
+% macOS / Linux
+mex CH_scores_mex_final.c CFLAGS='$CFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp'
+
+% Windows (adjust MinGW path if needed)
+mex C:\ProgramData\MATLAB\SupportPackages\R2020b\3P.instrset\mingw_w64.instrset\lib\gcc\x86_64-w64-mingw32\6.3.0\libgomp.a CH_scores_mex_final.c CFLAGS='$CFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp'
+```
+
+### Run
+
+```matlab
+cd /path/to/NSIforPPI/matlab
+run_aucpr_from_precomputed()
+```
+
+---
+
+## Python
+
+### Requirements
+
+- Python 3.8+
+- A C++ compiler with OpenMP support
+  - macOS: `brew install libomp llvm`
+  - Linux: GCC (usually pre-installed)
+
+### Setup: Install dependencies and compile C++ extension (once)
+
+```bash
+cd /path/to/NSIforPPI/python
+pip install pybind11 scipy numpy pandas networkx openpyxl
+python setup.py build_ext --inplace
+```
+
+### Run
+
+```bash
+cd /path/to/NSIforPPI/python
+python run_aucpr_from_precomputed.py
+```
