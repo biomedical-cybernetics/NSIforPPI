@@ -38,6 +38,7 @@ def run_aucpr_from_precomputed(
     perturbed_file='../matrix/network_perturbed_10percent_GSP_GSN_Yeast_noconn.mat',
     pairs_file='../matrix/list_pairs_10percent_GSP_GSN_Yeast_noconn.mat',
     output_file='../table/table_auc_pr_CH_Yeast_DIP_net.xlsx',
+    n_jobs=None,
 ):
     print(f"Loading network from {net_file}")
     net_data = _load_mat(net_file)
@@ -60,7 +61,7 @@ def run_aucpr_from_precomputed(
     S_list = []
     for i in range(num_sims):
         print(f"CH link prediction: simulation {i+1}/{num_sims}")
-        df = cha_linkpred_monopartite(_to_dense(L_net[i, 0]), methods)
+        df = cha_linkpred_monopartite(_to_dense(L_net[i, 0]), methods, n_jobs=n_jobs)
         S_list.append(df)
 
     results_dir = '../network_similarities/CH_L2_L3/results/'
@@ -122,5 +123,6 @@ if __name__ == '__main__':
     parser.add_argument('--perturbed_file', default='../matrix/network_perturbed_10percent_GSP_GSN_Yeast_noconn.mat')
     parser.add_argument('--pairs_file',     default='../matrix/list_pairs_10percent_GSP_GSN_Yeast_noconn.mat')
     parser.add_argument('--output_file',    default='../table/table_auc_pr_CH_Yeast_DIP_net.xlsx')
+    parser.add_argument('--n_jobs',         type=int, default=None, help='Number of parallel workers (1=serial, None=all CPUs)')
     args = parser.parse_args()
-    run_aucpr_from_precomputed(args.net_file, args.perturbed_file, args.pairs_file, args.output_file)
+    run_aucpr_from_precomputed(args.net_file, args.perturbed_file, args.pairs_file, args.output_file, args.n_jobs)

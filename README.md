@@ -81,7 +81,13 @@ python setup.py build_ext --inplace
 
 ### Run
 
+The `--n_jobs` argument controls parallelism for the subranking step:
+
 ```bash
 cd /path/to/NSIforPPI/python
-python run_aucpr_from_precomputed.py
+
+python run_aucpr_from_precomputed.py --n_jobs 4
+
+# Serial mode (no multiprocessing, useful when memory is limited)
+python run_aucpr_from_precomputed.py --n_jobs 1
 ```

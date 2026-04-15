@@ -71,7 +71,7 @@ def _subrank_task(args):
         return [(method, result)]
 
 
-def cha_linkpred_monopartite(x, methods):
+def cha_linkpred_monopartite(x, methods, n_jobs=None):
     if hasattr(x, 'toarray'):
         x = x.toarray()
     x = np.asarray(x, dtype=float)
@@ -107,9 +107,14 @@ def cha_linkpred_monopartite(x, methods):
             is_ra_l3 = (method == 'RA_L3' and idx_ra_l3 is not None)
             tasks.append((method, x, S, rows, cols, is_ra_l3))
 
-    with ProcessPoolExecutor() as executor:
-        for pairs in executor.map(_subrank_task, tasks):
-            for col, data in pairs:
+    if n_jobs == 1:
+        for task in tasks:
+            for col, data in _subrank_task(task):
                 col_data[col] = data
+    else:
+        with ProcessPoolExecutor(max_workers=n_jobs) as executor:
+            for pairs in executor.map(_subrank_task, tasks):
+                for col, data in pairs:
+                    col_data[col] = data
 
     return pd.DataFrame(col_data)

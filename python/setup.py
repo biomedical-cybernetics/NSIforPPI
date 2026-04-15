@@ -10,7 +10,7 @@ if sys.platform == "darwin":  # macOS
     llvm_include = os.popen("brew --prefix llvm").read().strip() + "/include"
     llvm_lib = os.popen("brew --prefix llvm").read().strip() + "/lib"
     extra_compile_args += ["-Xpreprocessor", "-fopenmp", "-I" + llvm_include]
-    extra_link_args += ["-lomp", "-L" + llvm_lib]
+    extra_link_args += [llvm_lib + "/libomp.dylib", "-Wl,-rpath," + llvm_lib]
 elif sys.platform == "linux" or sys.platform == "linux2":  # Linux
     extra_compile_args += ["-fopenmp"]
     extra_link_args += ["-fopenmp"]
